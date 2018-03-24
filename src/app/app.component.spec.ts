@@ -1,7 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { AppModule } from './app.module';
-import { MatToolbarModule, MatSidenavModule, MatIconModule } from '@angular/material';
+import { MatToolbarModule, MatSidenavModule, MatIconModule, MatCardModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { MetadataComponent } from './metadata/metadata.component';
 import { CallbackComponent } from './callback/callback.component';
@@ -12,7 +12,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ MatToolbarModule, MatSidenavModule, MatIconModule, AppRoutingModule, NoopAnimationsModule],
+      imports: [ MatToolbarModule, MatSidenavModule, MatCardModule, MatIconModule, AppRoutingModule, NoopAnimationsModule],
       declarations: [ AppComponent, MetadataComponent, CallbackComponent, DashboardComponent],
       providers: [{provide: APP_BASE_HREF, useValue: '/'}]
     }).compileComponents();

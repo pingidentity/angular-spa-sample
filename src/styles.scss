@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import '~@angular/material/theming';
+
+// Define a custom typography config that overrides the font-family as well as the
+// `headlines` and `body-1` levels.
+$custom-typography: mat-typography-config(
+  $font-family: 'Roboto, monospace',
+  $headline: mat-typography-level(32px, 48px, 700),
+  $body-1: mat-typography-level(16px, 24px, 500)
+);
+
+// Override typography CSS classes (e.g., mat-h1, mat-display-1, mat-typography, etc.).
+@include mat-base-typography($custom-typography);
+
+// Override typography for a specific Angular Material components.
+@include mat-checkbox-typography($custom-typography);
+
+// Override typography for all Angular Material, including mat-base-typography and all components.
+@include angular-material-typography($custom-typography);
+
+// Override the typography in the core CSS.
+@include mat-core($custom-typography);
+
+body {
+    margin: 0;
+}
+.mat-card {
+    max-width: 640px;
+    margin: 5px;
+    @include mat-elevation(8);
+    @include mat-elevation-transition;
+}
+.mat-card-header .mat-card-title {
+    height: 40px;
+    padding-top: 8px;
+    font-size: 20px;
+  }
+
+.mat-card dl dt {
+    font-style: italic;
+    font-size: 110%;
+    padding-top: 1em;
+}
+
+.mat-card dl dt:first {
+    padding-top: 0px;
+}

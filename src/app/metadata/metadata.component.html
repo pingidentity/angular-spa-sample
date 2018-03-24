@@ -1,3 +1,16 @@
-<p>
-  metadata works!
-</p>
+<mat-card>
+  <mat-card-header>
+      <mat-card-title>OpenID Connect Metadata</mat-card-title>
+      <mat-card-subtitle>Configuration Data for the Identity Provider</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content *ngIf='authorizationService.configuration'>
+    <pre style="text-overflow: ellipsis; overflow: hidden">{{ authorizationService.configuration | json }}</pre>
+  </mat-card-content>
+  <mat-card-content *ngIf='!authorizationService.configuration'>
+    No metadata loaded for server.
+  </mat-card-content>
+  <mat-card-actions>
+    <button (click)='authorizationService.fetchServiceConfiguration()' mat-button>{{authorizationService.configuration ? 'RELOAD' : 'LOAD'}}</button>
+  </mat-card-actions>
+
+</mat-card>

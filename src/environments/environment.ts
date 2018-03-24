@@ -4,5 +4,8 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  issuer: 'https://accounts.google.com',
+  client_id: '465844544800-f1k5bhu8jibs9vc1ifh7nmhpmh7nqnod.apps.googleusercontent.com',
+  redirect_uri: 'http://localhost:4200/callback'
 };

@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MetadataComponent } from './metadata.component';
+import { MatCardModule } from '@angular/material';
+import { AuthorizationService } from '../authorization.service';
 
 describe('MetadataComponent', () => {
   let component: MetadataComponent;
@@ -8,7 +10,9 @@ describe('MetadataComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MetadataComponent ]
+      imports: [ MatCardModule ],
+      declarations: [ MetadataComponent ],
+      providers: [ AuthorizationService ]
     })
     .compileComponents();
   }));

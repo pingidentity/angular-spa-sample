@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthorizationService } from '../authorization.service';
 
 @Component({
   selector: 'app-metadata',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MetadataComponent implements OnInit {
 
-  constructor() { }
+  constructor(public authorizationService: AuthorizationService) { }
 
   ngOnInit() {
   }
