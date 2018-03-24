@@ -1,3 +1,12 @@
-<p>
-  intro works!
-</p>
+<mat-card *ngIf='!dismissed'>
+  <mat-card-header>
+      <img mat-card-avatar src='https://appauth.io/logo/AppAuth_logo.svg' />
+      <mat-card-title>AppAuth-JS</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    This example shows how one can integrate AppAuthJS and Angular. For more information look source of the application at the
+    following
+    <a href="https://github.com/openid/AppAuth-JS">https://github.com/openid/AppAuth-JS</a>.  
+  </mat-card-content>
+  <button id="dismissal" mat-button (click)='dismiss()'>DISMISS</button>
+</mat-card>

@@ -1,3 +1,33 @@
-<p>
-  authentication works!
-</p>
+<mat-card *ngIf='authorizationService.authenticated'>
+  <mat-card-header>
+    <mat-card-title>User information</mat-card-title>
+    <img mat-card-avatar src='{{authorizationService?.userInfo?.picture}}' />
+  </mat-card-header>
+  <mat-card-content>
+<!--  <dl>
+    <dt>Name</dt>
+    <dd>{{authorizationService.currentUserName}}</dd>
+    <dt>Given Name</dt>
+    <dd>{{authorizationService?.userInfo.given_name}}</dd>
+    <dt>Family Name</dt>
+    <dd>{{authorizationService?.userInfo.family_name}}</dd>
+  </dl>
+-->
+</mat-card-content>
+  <button id="handle-sign-out" mat-button (click)='authorizationService.signOut()'>SIGN OUT</button>
+  <button id="handle-user-info"  mat-button>USER INFO</button>
+</mat-card>
+
+<mat-card *ngIf='!authorizationService.authenticated'>
+  <mat-card-header>
+    <mat-card-title>User information</mat-card-title>
+    <mat-icon mat-card-avatar style='font-size: 40px'>info</mat-icon>
+    <!-- <i mat-card-avatar style='font-size: 40px' class="material-icons">info</i> -->
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+    There is no currently authenticated user.
+    </p>
+  </mat-card-content>
+    <button *ngIf="!authorizationService.authenticated" id="handle-sign-in" mat-button (click)='authorizationService.authorize()'>SIGN IN</button>
+</mat-card>
