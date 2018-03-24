@@ -1,14 +1,21 @@
 {
   "name": "appauth-angular-app",
-  "version": "0.0.0",
+  "description": "AppAuth example for Angular",
+  "version": "0.0.1",
   "license": "MIT",
+  "engines" : {
+    "node": "~9.9.0",
+    "yarn": "~1.5.1"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build --prod",
+    "heroku-postbuild": "cd heroku-server && yarn install"
   },
   "private": true,
   "dependencies": {
