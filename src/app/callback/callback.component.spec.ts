@@ -9,6 +9,9 @@ import { MatCardModule, MatIconModule } from '@angular/material';
 import { IntroComponent } from '../intro/intro.component';
 import { AuthenticationComponent } from '../authentication/authentication.component';
 import { APP_BASE_HREF } from '@angular/common';
+import { Html5Requestor } from '../html5_requestor';
+import { environment } from '../../environments/environment';
+import { Requestor } from '@openid/appauth';
 
 describe('CallbackComponent', () => {
   let component: CallbackComponent;
@@ -20,7 +23,9 @@ describe('CallbackComponent', () => {
       declarations: [ CallbackComponent, MetadataComponent, DashboardComponent, IntroComponent, AuthenticationComponent ],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},
-        AuthorizationService
+        AuthorizationService,
+        { provide: Requestor, useValue: new Html5Requestor()},
+        { provide: 'AuthorizationConfig', useValue: environment}
       ],
     })
     .compileComponents();

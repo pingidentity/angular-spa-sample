@@ -4,6 +4,10 @@
     <img mat-card-avatar src='{{authorizationService?.userInfo?.picture}}' />
   </mat-card-header>
   <mat-card-content>
+    <dl>
+      <dt>Subject</dt>
+      <dd>{{userInfo.subject}</dd>
+    </dl>
 <!--  <dl>
     <dt>Name</dt>
     <dd>{{authorizationService.currentUserName}}</dd>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import {
   AuthorizationNotifier,
   AuthorizationRequest,
@@ -9,70 +9,63 @@ import {
   StringMap,
   TokenRequest,
   TokenResponse,
-  GRANT_TYPE_AUTHORIZATION_CODE
+  GRANT_TYPE_AUTHORIZATION_CODE,
+  AppAuthError
 } from '@openid/appauth';
-import { Html5Requestor } from './html5_requestor';
-import { environment } from '../environments/environment';
+
 import { TokenResponseJson } from '../../../AppAuth-JS/built/token_response';
-import {UserInfo} from './userinfo';
+import { UserInfo          } from './userinfo';
+import { AuthorizationConfig } from './authorization_config';
 
 @Injectable()
 export class AuthorizationService {
 
-  /* an example open id connect provider */
-  openIdConnectUrl = environment.issuer;
-
-  /* example client configuration */
-  redirectUri = environment.redirect_uri;
-  clientId = environment.client_id;
-  scope = 'openid';
-
-  requestor = new Html5Requestor();
+  // issuerUri = environment.issuer;
+  // redirectUri = environment.redirect_uri;
+  // clientId = environment.client_id;
+  // extras = environment.extras;
 
   authenticated = false;
   tokenResponse: TokenResponse | null = null;
 
-  currentUserName: string | null;
   userInfo: UserInfo | null;
   configuration: AuthorizationServiceConfiguration | null = null;
   notifier = new AuthorizationNotifier();
   authorizationHandler = new RedirectRequestHandler();
 
-  constructor() {
+  constructor(
+    private requestor: Requestor,
+    @Inject('AuthorizationConfig') private environment: AuthorizationConfig) {
     this.authorizationHandler.setAuthorizationNotifier(this.notifier);
   }
 
-  authorize(): Promise<void>  {
-    return this.fetchServiceConfiguration().then((configuration) => {
-      const extras: StringMap = {
-        'prompt': 'consent',
-        'access_type': 'offline'
-      };
+  async authorize(): Promise<void>  {
+    const configuration = await this.fetchServiceConfiguration();
+    const scope = this.environment.scope || 'openid';
 
-            // create a request
-      const request = new AuthorizationRequest(
-        this.clientId, this.redirectUri, this.scope, AuthorizationRequest.RESPONSE_TYPE_CODE,
-        undefined /* state */, extras);
+    // create a request
+    const request = new AuthorizationRequest(
+      this.environment.client_id, this.environment.redirect_uri, scope, AuthorizationRequest.RESPONSE_TYPE_CODE,
+      undefined /* state */, this.environment.extras);
 
-      console.log('Making authorization request ', this.configuration, request);
+    console.log('Making authorization request ', this.configuration, request);
 
-      this.authorizationHandler.performAuthorizationRequest(
-        this.configuration!, request);
-      });
+    this.authorizationHandler.performAuthorizationRequest(this.configuration, request);
   }
 
-  fetchServiceConfiguration(): Promise<AuthorizationServiceConfiguration> {
-    return AuthorizationServiceConfiguration
-      .fetchFromIssuer(this.openIdConnectUrl, this.requestor)
-      .then(response => {
-        console.log('Fetched service configuration', response);
-        this.configuration = response;
-        return response;
-      });
+  async fetchServiceConfiguration(force: boolean = false): Promise<AuthorizationServiceConfiguration> {
+    // return the existing configuration first, if present and we aren't forcing a re-fetch
+    if (!force && this.configuration != null) {
+      return this.configuration;
+    }
+
+    const response = await AuthorizationServiceConfiguration.fetchFromIssuer(this.environment.issuer_uri, this.requestor);
+    console.log('Fetched service configuration', response);
+    this.configuration = response;
+    return response;
   }
 
   signOut(): void {
-    this.currentUserName = null;
     this.authenticated = false;
   }
 
@@ -83,11 +76,11 @@ export class AuthorizationService {
         this.notifier.setAuthorizationListener((request, response, error) => {
           console.log('Authorization request complete ', request, response, error);
           if (response && response.code) {
-            const tokenHandler = new BaseTokenRequestHandler(new Html5Requestor());
+            const tokenHandler = new BaseTokenRequestHandler(this.requestor);
 
             // use the code to make the token request.
             const tokenRequest = new TokenRequest(
-                this.clientId, this.redirectUri, GRANT_TYPE_AUTHORIZATION_CODE, response.code, undefined);
+              this.environment.client_id, this.environment.redirect_uri, GRANT_TYPE_AUTHORIZATION_CODE, response.code, undefined);
 
             console.log('making token request');
             tokenHandler.performTokenRequest(configuration, tokenRequest)
@@ -102,6 +95,21 @@ export class AuthorizationService {
         });
         this.authorizationHandler.completeAuthorizationRequestIfPossible();
       }, reject);
+    });
+  }
+
+  async fetchUserInfo(token: TokenResponse): Promise<UserInfo> {
+    const configuration = await this.fetchServiceConfiguration();
+    if (configuration.userInfoEndpoint == null) {
+      throw new Error('userinfo not specified by metadata');
+    }
+
+    const accessToken = token.accessToken;
+    return await this.requestor.xhr<UserInfo>({
+      url: configuration.userInfoEndpoint,
+      method: 'GET',
+      dataType: 'json',
+      headers: {'Authorization': `Bearer ${accessToken}`}
     });
   }
 }

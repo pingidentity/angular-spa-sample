@@ -3,7 +3,7 @@
   "description": "AppAuth example for Angular",
   "version": "0.0.1",
   "license": "MIT",
-  "engines" : {
+  "engines": {
     "node": "~9.9.0",
     "yarn": "~1.5.1"
   },

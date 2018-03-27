@@ -5,6 +5,9 @@ import { MatCardModule, MatIconModule } from '@angular/material';
 import { AuthorizationService } from '../authorization.service';
 import { AuthenticationComponent } from '../authentication/authentication.component';
 import { IntroComponent } from '../intro/intro.component';
+import { environment } from '../../environments/environment';
+import { Html5Requestor } from '../html5_requestor';
+import { Requestor } from '@openid/appauth';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -14,7 +17,11 @@ describe('DashboardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ DashboardComponent, AuthenticationComponent, IntroComponent ],
       imports: [MatCardModule, MatIconModule],
-      providers: [AuthorizationService]
+      providers: [
+        AuthorizationService,
+        { provide: Requestor, useValue: new Html5Requestor()},
+        { provide: 'AuthorizationConfig', useValue: environment}
+     ]
     })
     .compileComponents();
   }));

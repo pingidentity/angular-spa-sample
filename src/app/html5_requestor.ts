@@ -1,19 +1,18 @@
 import { Requestor } from '@openid/appauth';
 
 export class Html5Requestor extends Requestor {
-    xhr<T>(settings: JQueryAjaxSettings): Promise<T> {
-        const headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
+    async xhr<T>(settings: JQueryAjaxSettings): Promise<T> {
+        if (settings.method === 'POST') {
+            const headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
 
-        if (settings.headers) {
-            for (const key in settings.headers) {
-                if (settings.headers.hasOwnProperty(key)) {
-                    const value = settings.headers[key];
-                    headers.set(key, value as string);
+            if (settings.headers) {
+                for (const key in settings.headers) {
+                    if (settings.headers.hasOwnProperty(key)) {
+                        const value = settings.headers[key];
+                        headers.set(key, value as string);
+                    }
                 }
             }
-        }
-
-        if (settings.method === 'POST') {
             let data: string;
             if (typeof settings.data === 'string') {
                 data = settings.data;
@@ -28,22 +27,20 @@ export class Html5Requestor extends Requestor {
                 }
                 data = params.toString();
             }
-            return fetch(settings.url as string, {
-                'method': 'POST',
-                'headers': headers,
-                'body': data,
-                'mode': 'cors'
-            })
-            .then(response => response.json())
-            .then(json => json as T);
+            const response = await fetch(settings.url as string, {
+                method: 'POST',
+                headers: headers,
+                body: data,
+                mode: 'cors'
+            });
+            return await response.json() as T;
         } else {
-            return fetch(settings.url as string, {
-                'method': 'GET',
-                'headers': headers,
-                'mode': 'cors'
-            })
-            .then(response => response.json())
-            .then(json => json as T);
+            const response = await fetch(settings.url as string, {
+                method: 'GET',
+                headers: settings.headers,
+                mode: 'cors'
+            });
+            return await response.json() as T;
         }
     }
 }
