@@ -12,6 +12,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { Html5Requestor } from '../html5_requestor';
 import { environment } from '../../environments/environment';
 import { Requestor } from '@openid/appauth';
+import '../rxjs-operators';
 
 describe('CallbackComponent', () => {
   let component: CallbackComponent;

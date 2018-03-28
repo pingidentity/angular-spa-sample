@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AuthorizationService } from '../authorization.service';
+import { AuthorizationServiceConfiguration } from '@openid/appauth';
+import { AuthorizationConfig } from '../authorization_config';
 
 @Component({
   selector: 'app-metadata',
@@ -8,9 +10,18 @@ import { AuthorizationService } from '../authorization.service';
 })
 export class MetadataComponent implements OnInit {
 
-  constructor(public authorizationService: AuthorizationService) { }
+  public issuer_uri: string;
+
+  constructor(private authorizationService: AuthorizationService,
+    @Inject('AuthorizationConfig') private environment: AuthorizationConfig
+) {
+  this.issuer_uri = environment.issuer_uri;
+}
+
+  public authorizationServiceConfiguration: AuthorizationServiceConfiguration | null;
 
   ngOnInit() {
+    this.authorizationService.serviceConfiguration().subscribe( (config) => this.authorizationServiceConfiguration = config);
   }
 
 }

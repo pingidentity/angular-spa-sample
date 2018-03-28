@@ -1,16 +1,22 @@
 <mat-card>
   <mat-card-header>
       <mat-card-title>OpenID Connect Metadata</mat-card-title>
-      <mat-card-subtitle>Configuration Data for the Identity Provider</mat-card-subtitle>
+      <mat-card-subtitle>Location and capability information of the Identity Provider.</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content *ngIf='authorizationService.configuration'>
-    <pre style="text-overflow: ellipsis; overflow: hidden">{{ authorizationService.configuration | json }}</pre>
+  <mat-card-content>
+    An Identity Provider is specified by an Issuer URL. Configuration data on how to use the identity provider can be requested based on this URL.
   </mat-card-content>
-  <mat-card-content *ngIf='!authorizationService.configuration'>
-    No metadata loaded for server.
+  <mat-card-content>
+    <h4>Issuer URI</h4>
+    <a href='{{issuer_uri}}/.well-known/openid-configuration' alt='link to metadata, if available'><pre>{{issuer_uri}}</pre></a>
   </mat-card-content>
-  <mat-card-actions>
-    <button (click)='authorizationService.fetchServiceConfiguration()' mat-button>{{authorizationService.configuration ? 'RELOAD' : 'LOAD'}}</button>
-  </mat-card-actions>
-
+  <mat-card-content *ngIf='authorizationServiceConfiguration'>
+    <h4>Metadata</h4>
+    <p><em>Note that this loaded metadata is a subset of the information understood by the OpenID Connect library in use.</em></p>
+    <pre class='json-display'>{{ authorizationServiceConfiguration | json }}</pre>
+  </mat-card-content>
+  <mat-card-content *ngIf='!authorizationServiceConfiguration'>
+    <h4>Metadata</h4>
+    Metadata cannot be loaded for this IDP. Check your browser logs for more information.
+  </mat-card-content>
 </mat-card>

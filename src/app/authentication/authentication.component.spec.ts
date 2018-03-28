@@ -6,6 +6,7 @@ import { AuthorizationService } from '../authorization.service';
 import { Requestor } from '@openid/appauth';
 import { Html5Requestor } from '../html5_requestor';
 import { environment } from '../../environments/environment';
+import '../rxjs-operators';
 
 describe('AuthenticationComponent', () => {
   let component: AuthenticationComponent;

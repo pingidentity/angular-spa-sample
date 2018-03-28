@@ -46,3 +46,9 @@ body {
 .mat-card dl dt:first {
     padding-top: 0px;
 }
+
+pre.json-display {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: pre-wrap;
+}

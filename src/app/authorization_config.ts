@@ -6,3 +6,7 @@ export interface AuthorizationConfig {
     scope?:         string;
     extras?:        any;
 }
+
+export interface GeneralEnvironmentInfo {
+    production?: boolean;
+}

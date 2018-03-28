@@ -11,6 +11,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { IntroComponent } from './intro/intro.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { AuthorizationService } from './authorization.service';
+import './rxjs-operators';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {

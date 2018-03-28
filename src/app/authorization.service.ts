@@ -13,8 +13,11 @@ import {
   AppAuthError
 } from '@openid/appauth';
 
-import { TokenResponseJson } from '../../../AppAuth-JS/built/token_response';
-import { UserInfo          } from './userinfo';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+import { TokenResponseJson   } from '../../../AppAuth-JS/built/token_response';
+import { UserInfo            } from './userinfo';
 import { AuthorizationConfig } from './authorization_config';
 
 @Injectable()
@@ -24,54 +27,95 @@ export class AuthorizationService {
   // redirectUri = environment.redirect_uri;
   // clientId = environment.client_id;
   // extras = environment.extras;
+  private notifier = new AuthorizationNotifier();
+  private authorizationHandler = new RedirectRequestHandler();
 
-  authenticated = false;
-  tokenResponse: TokenResponse | null = null;
-
-  userInfo: UserInfo | null;
-  configuration: AuthorizationServiceConfiguration | null = null;
-  notifier = new AuthorizationNotifier();
-  authorizationHandler = new RedirectRequestHandler();
+  private _tokenResponses: BehaviorSubject<TokenResponse>;
+  private _userInfos: BehaviorSubject<UserInfo>;
+  private _serviceConfigs: BehaviorSubject<AuthorizationServiceConfiguration>;
 
   constructor(
     private requestor: Requestor,
     @Inject('AuthorizationConfig') private environment: AuthorizationConfig) {
     this.authorizationHandler.setAuthorizationNotifier(this.notifier);
+    this._tokenResponses = new BehaviorSubject(null);
+    this._serviceConfigs = new BehaviorSubject(null);
+    this._userInfos = new BehaviorSubject(null);
+    this._tokenResponses.combineLatest(this._serviceConfigs)
+    .subscribe(
+      ([token, configuration]) => {
+        // if we do not have a configuration, need to make sure the tokenResponse has been cleared
+        console.log('running with token=' + (token && JSON.stringify(token.toJson())) +
+        ', configuration=' + (configuration && JSON.stringify(configuration)));
+        if (configuration == null) {
+          if (token != null) {
+            this._tokenResponses.next(null);
+          }
+        }
+        // if we do not have both valid configuration and tokens, we don't have the ability to set a userinfo
+        if (configuration == null || token == null) {
+          this._userInfos.next(null);
+          return;
+        }
+
+        if (configuration.userInfoEndpoint == null) {
+          console.log('userinfo not emitted - userinfo endpoint not specified by metadata');
+          this._userInfos.next(null);
+        }
+
+        const accessToken = token.accessToken;
+        this.requestor.xhr<UserInfo>({
+            url: configuration.userInfoEndpoint,
+            method: 'GET',
+            dataType: 'json',
+            headers: {'Authorization': `Bearer ${accessToken}`}
+          }).then((userinfo) => {
+            this._userInfos.next(userinfo);
+          });
+    });
+    this.fetchServiceConfiguration(environment);
+    this._serviceConfigs.subscribe((config) => console.log('service config changed to' + config));
   }
 
-  async authorize(): Promise<void>  {
-    const configuration = await this.fetchServiceConfiguration();
-    const scope = this.environment.scope || 'openid';
-
-    // create a request
-    const request = new AuthorizationRequest(
-      this.environment.client_id, this.environment.redirect_uri, scope, AuthorizationRequest.RESPONSE_TYPE_CODE,
-      undefined /* state */, this.environment.extras);
-
-    console.log('Making authorization request ', this.configuration, request);
-
-    this.authorizationHandler.performAuthorizationRequest(this.configuration, request);
+  public serviceConfiguration(): Observable<AuthorizationServiceConfiguration> {
+    return this._serviceConfigs.asObservable().distinctUntilChanged();
   }
 
-  async fetchServiceConfiguration(force: boolean = false): Promise<AuthorizationServiceConfiguration> {
-    // return the existing configuration first, if present and we aren't forcing a re-fetch
-    if (!force && this.configuration != null) {
-      return this.configuration;
-    }
+  public tokenResponse(): Observable<TokenResponse> {
+    return this._tokenResponses.asObservable().distinctUntilChanged();
+  }
 
-    const response = await AuthorizationServiceConfiguration.fetchFromIssuer(this.environment.issuer_uri, this.requestor);
-    console.log('Fetched service configuration', response);
-    this.configuration = response;
-    return response;
+  public userInfos(): Observable<UserInfo> {
+    return this._userInfos.asObservable().distinctUntilChanged();
+  }
+
+  authorize(): void  {
+    this._serviceConfigs.filter((value) => value != null).take(1).subscribe((configuration) => {
+      const scope = this.environment.scope || 'openid';
+
+      // create a request
+      const request = new AuthorizationRequest(
+        this.environment.client_id, this.environment.redirect_uri, scope, AuthorizationRequest.RESPONSE_TYPE_CODE,
+        undefined /* state */, this.environment.extras);
+
+        console.log('Making authorization request ', configuration, request);
+        this.authorizationHandler.performAuthorizationRequest(configuration, request);
+    });
+  }
+
+  private async fetchServiceConfiguration(configuration: AuthorizationConfig) {
+    const response = await AuthorizationServiceConfiguration.fetchFromIssuer(configuration.issuer_uri, this.requestor);
+    this._serviceConfigs.next(response);
   }
 
   signOut(): void {
-    this.authenticated = false;
+    console.log('signing out');
+    this._tokenResponses.next(null);
   }
 
   completeAuthorizationRequest(): Promise<TokenResponse> {
     return new Promise((resolve, reject) => {
-      this.fetchServiceConfiguration().then((configuration) => {
+      this._serviceConfigs.filter((value) => value != null).take(1).subscribe((configuration) => {
         console.log('setting listener');
         this.notifier.setAuthorizationListener((request, response, error) => {
           console.log('Authorization request complete ', request, response, error);
@@ -87,29 +131,16 @@ export class AuthorizationService {
               .then((tokenResponse) => {
                 console.log('received token response ', tokenResponse);
                 localStorage.setItem('issuerResponse', JSON.stringify(tokenResponse.toJson()));
+                this._tokenResponses.next(tokenResponse);
                 resolve(tokenResponse);
               });
           } else {
             reject(error);
           }
         });
+        console.log('attempt to complete request');
         this.authorizationHandler.completeAuthorizationRequestIfPossible();
       }, reject);
-    });
-  }
-
-  async fetchUserInfo(token: TokenResponse): Promise<UserInfo> {
-    const configuration = await this.fetchServiceConfiguration();
-    if (configuration.userInfoEndpoint == null) {
-      throw new Error('userinfo not specified by metadata');
-    }
-
-    const accessToken = token.accessToken;
-    return await this.requestor.xhr<UserInfo>({
-      url: configuration.userInfoEndpoint,
-      method: 'GET',
-      dataType: 'json',
-      headers: {'Authorization': `Bearer ${accessToken}`}
     });
   }
 }
