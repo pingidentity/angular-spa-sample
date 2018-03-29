@@ -192,9 +192,9 @@
     tree-kill "^1.0.0"
     webpack-sources "^1.1.0"
 
-"@openid/appauth@git+https://github.com/openid/AppAuth-JS.git":
+"@openid/appauth@openid/AppAuth-JS.git":
   version "0.3.2"
-  resolved "git+https://github.com/openid/AppAuth-JS.git#b078eaca1d962f1ed33bd4a63fb2dedb80f157e8"
+  resolved "https://codeload.github.com/openid/AppAuth-JS/tar.gz/b078eaca1d962f1ed33bd4a63fb2dedb80f157e8"
   dependencies:
     "@types/jquery" "^3.2.16"
     form-data "^2.3.1"

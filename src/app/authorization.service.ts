@@ -123,10 +123,11 @@ export class AuthorizationService {
             const tokenHandler = new BaseTokenRequestHandler(this.requestor);
 
             // use the code to make the token request.
+            const extras: StringMap = this.environment.client_secret ? { client_secret: this.environment.client_secret } : undefined;
             const tokenRequest = new TokenRequest(
-              this.environment.client_id, this.environment.redirect_uri, GRANT_TYPE_AUTHORIZATION_CODE, response.code, undefined);
+              this.environment.client_id, this.environment.redirect_uri, GRANT_TYPE_AUTHORIZATION_CODE, response.code, null, extras);
 
-            console.log('making token request');
+            console.log('making token request:' + JSON.stringify(tokenRequest.toStringMap));
             tokenHandler.performTokenRequest(configuration, tokenRequest)
               .then((tokenResponse) => {
                 console.log('received token response ', tokenResponse);
