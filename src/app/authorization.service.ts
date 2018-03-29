@@ -16,7 +16,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { TokenResponseJson   } from '../../../AppAuth-JS/built/token_response';
+import { TokenResponseJson   } from '@openid/appauth';
 import { UserInfo            } from './userinfo';
 import { AuthorizationConfig } from './authorization_config';
 
