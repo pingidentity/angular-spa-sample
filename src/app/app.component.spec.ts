@@ -12,7 +12,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { AppModule } from './app.module';
-import { MatToolbarModule, MatSidenavModule, MatIconModule, MatCardModule } from '@angular/material';
+import { MatToolbarModule, MatSidenavModule, MatIconModule, MatCardModule, MatProgressSpinnerModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { MetadataComponent } from './metadata/metadata.component';
 import { CallbackComponent } from './callback/callback.component';
@@ -27,7 +27,7 @@ import './rxjs-operators';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ MatToolbarModule, MatSidenavModule, MatCardModule, MatIconModule, AppRoutingModule, NoopAnimationsModule],
+      imports: [ MatToolbarModule, MatSidenavModule, MatCardModule, MatIconModule, MatProgressSpinnerModule, AppRoutingModule, NoopAnimationsModule],
       declarations: [ AppComponent, MetadataComponent, CallbackComponent, DashboardComponent, IntroComponent, AuthenticationComponent],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},

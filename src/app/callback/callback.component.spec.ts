@@ -16,7 +16,7 @@ import { AuthorizationService } from '../authorization.service';
 import { AppRoutingModule } from '../app-routing.module';
 import { MetadataComponent } from '../metadata/metadata.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
-import { MatCardModule, MatIconModule } from '@angular/material';
+import { MatCardModule, MatIconModule, MatProgressSpinnerModule } from '@angular/material';
 import { IntroComponent } from '../intro/intro.component';
 import { AuthenticationComponent } from '../authentication/authentication.component';
 import { APP_BASE_HREF } from '@angular/common';
@@ -31,7 +31,7 @@ describe('CallbackComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ AppRoutingModule, MatCardModule, MatIconModule ],
+      imports: [ AppRoutingModule, MatCardModule, MatIconModule, MatProgressSpinnerModule ],
       declarations: [ CallbackComponent, MetadataComponent, DashboardComponent, IntroComponent, AuthenticationComponent ],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},

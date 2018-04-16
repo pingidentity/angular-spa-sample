@@ -16,6 +16,8 @@ import {
   MatButtonModule,
   MatCardModule,
   MatIconModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
   MatSidenavModule,
   MatSnackBarModule,
   MatToolbarModule
@@ -51,6 +53,8 @@ import './rxjs-operators';
     MatButtonModule,
     MatCardModule,
     MatIconModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatSidenavModule,
     MatSnackBarModule,
     MatToolbarModule,
