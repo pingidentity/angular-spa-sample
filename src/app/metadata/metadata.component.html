@@ -8,7 +8,7 @@
   </mat-card-content>
   <mat-card-content>
     <h4>Issuer URI</h4>
-    <a href='{{issuer_uri}}/.well-known/openid-configuration' alt='link to metadata, if available'><pre>{{issuer_uri}}</pre></a>
+    <a href='{{authorizationService.expectedMetadataUri}}' alt='link to metadata, if available'><pre>{{authorizationService.issuerUri}}</pre></a>
   </mat-card-content>
   <mat-card-content *ngIf='authorizationServiceConfiguration'>
     <h4>Metadata</h4>

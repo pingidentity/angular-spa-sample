@@ -21,18 +21,14 @@ import { AuthorizationConfig } from '../authorization_config';
 })
 export class MetadataComponent implements OnInit {
 
-  public issuer_uri: string;
-
-  constructor(private authorizationService: AuthorizationService,
-    @Inject('AuthorizationConfig') private environment: AuthorizationConfig
-) {
-  this.issuer_uri = environment.issuer_uri;
-}
-
   public authorizationServiceConfiguration: AuthorizationServiceConfiguration | null;
 
-  ngOnInit() {
-    this.authorizationService.serviceConfiguration().subscribe( (config) => this.authorizationServiceConfiguration = config);
+  constructor(private authorizationService: AuthorizationService) {
   }
 
+  ngOnInit() {
+    this.authorizationService.serviceConfiguration().subscribe( (config: AuthorizationServiceConfiguration) => {
+      this.authorizationServiceConfiguration = config;
+    });
+  }
 }

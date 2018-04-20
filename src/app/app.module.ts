@@ -36,6 +36,7 @@ import { MetadataComponent       } from './metadata/metadata.component';
 import { Html5Requestor          } from './html5_requestor';
 import { environment             } from '../environments/environment';
 import { AuthorizationConfig     } from './authorization_config';
+import { IntroDisplayService } from './intro-display.service';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { AuthorizationConfig     } from './authorization_config';
   ],
   providers: [
     AuthorizationService,
+    IntroDisplayService,
     { provide: Requestor, useValue: new Html5Requestor()},
     { provide: 'AuthorizationConfig', useValue: environment}
   ],

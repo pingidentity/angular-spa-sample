@@ -10,6 +10,7 @@
 // limitations under the License.
 
 import { Component, OnInit } from '@angular/core';
+import { IntroDisplayService } from '../intro-display.service';
 
 @Component({
   selector: 'app-intro',
@@ -18,23 +19,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IntroComponent implements OnInit {
 
-  get dismissed(): boolean {
-    return localStorage.getItem('introComponent.dismissed') === 'true';
-  }
-
-  set dismissed(value: boolean) {
-    if (value) {
-      localStorage.setItem('introComponent.dismissed', 'true');
-    } else {
-      localStorage.removeItem('introComponent.dismissed');
-    }
-  }
-
+  constructor(public introDisplay: IntroDisplayService) {}
+  
   dismiss() {
-    this.dismissed = true;
+    this.introDisplay.dismissed = true;
   }
-  constructor() { }
-
   ngOnInit() {
   }
 

@@ -19,6 +19,7 @@ import { IntroComponent } from '../intro/intro.component';
 import { environment } from '../../environments/environment';
 import { Html5Requestor } from '../html5_requestor';
 import { Requestor } from '@openid/appauth';
+import { IntroDisplayService } from '../intro-display.service';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -30,9 +31,10 @@ describe('DashboardComponent', () => {
       imports: [MatCardModule, MatIconModule],
       providers: [
         AuthorizationService,
+        IntroDisplayService,
         { provide: Requestor, useValue: new Html5Requestor()},
         { provide: 'AuthorizationConfig', useValue: environment}
-     ]
+     ],
     })
     .compileComponents();
   }));
