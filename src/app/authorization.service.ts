@@ -25,8 +25,9 @@ import {
 } from '@openid/appauth';
 
 import { Observable } from 'rxjs/Observable';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
+import { distinctUntilChanged, filter, take } from 'rxjs/operators';
 import { TokenResponseJson   } from '@openid/appauth';
 import { UserInfo            } from './userinfo';
 import { AuthorizationConfig } from './authorization_config';
@@ -52,9 +53,9 @@ export class AuthorizationService {
     this._tokenResponses = new BehaviorSubject(null);
     this._serviceConfigs = new BehaviorSubject(null);
     this._userInfos = new BehaviorSubject(null);
-    this._tokenResponses.combineLatest(this._serviceConfigs)
+    combineLatest(this._tokenResponses, this._serviceConfigs)
     .subscribe(
-      ([token, configuration]) => {
+      ([token, configuration]: [TokenResponse, AuthorizationServiceConfiguration]) => {
         // if we do not have a configuration, need to make sure the tokenResponse has been cleared
         console.log('running with token=' + (token && JSON.stringify(token.toJson())) +
         ', configuration=' + (configuration && JSON.stringify(configuration)));
@@ -85,23 +86,26 @@ export class AuthorizationService {
           });
     });
     this.fetchServiceConfiguration(environment);
-    this._serviceConfigs.subscribe((config) => console.log('service config changed to' + config));
+    this._serviceConfigs.subscribe((config: AuthorizationServiceConfiguration) => console.log('service config changed to' + config));
   }
 
   public serviceConfiguration(): Observable<AuthorizationServiceConfiguration> {
-    return this._serviceConfigs.asObservable().distinctUntilChanged();
+    return this._serviceConfigs.asObservable().pipe(distinctUntilChanged());
   }
 
   public tokenResponse(): Observable<TokenResponse> {
-    return this._tokenResponses.asObservable().distinctUntilChanged();
+    return this._tokenResponses.asObservable().pipe(distinctUntilChanged());
   }
 
   public userInfos(): Observable<UserInfo> {
-    return this._userInfos.asObservable().distinctUntilChanged();
+    return this._userInfos.asObservable().pipe(distinctUntilChanged());
   }
 
   authorize(): void  {
-    this._serviceConfigs.filter((value) => value != null).take(1).subscribe((configuration) => {
+    this._serviceConfigs
+    .pipe(filter((value: any) => value != null))
+    .pipe(take(1))
+    .subscribe((configuration: AuthorizationServiceConfiguration) => {
       const scope = this.environment.scope || 'openid';
 
       // create a request
@@ -126,7 +130,10 @@ export class AuthorizationService {
 
   completeAuthorizationRequest(): Promise<TokenResponse> {
     return new Promise((resolve, reject) => {
-      this._serviceConfigs.filter((value) => value != null).take(1).subscribe((configuration) => {
+      this._serviceConfigs
+      .pipe(filter((value: any) => value != null))
+      .pipe(take(1))
+      .subscribe((configuration: AuthorizationServiceConfiguration) => {
         console.log('setting listener');
         this.notifier.setAuthorizationListener((request, response, error) => {
           console.log('Authorization request complete ', request, response, error);

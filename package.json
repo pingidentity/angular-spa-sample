@@ -21,10 +21,8 @@
   "dependencies": {
     "@angular/animations": "^5.0.0",
     "@angular/cdk": "^5.2.4",
-    "@angular/cli": "1.7.4",
     "@angular/common": "^5.0.0",
     "@angular/compiler": "^5.0.0",
-    "@angular/compiler-cli": "^5.0.0",
     "@angular/core": "^5.0.0",
     "@angular/forms": "^5.0.0",
     "@angular/http": "^5.0.0",
@@ -38,24 +36,19 @@
     "typescript": "~2.6.2 < 2.7",
     "zone.js": "^0.8.14"
   },
-  "dependencyComments": [
-    "typescript is pinned < 2.7 by several dependencies, mostly through angular-cli",
-    "karma-jasmine limits jasmine-core to <3",
-    "AppAuth-JS is brought in from github head because 0.3.2 isn't released yet"
-  ],
   "devDependencies": {
     "@angular-devkit/core": "^0.3.2",
+    "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.0.0",
+    "@angular/cli": "1.7.4",
     "@types/jasmine": "~2.8.6",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~9.6.0",
-    "ajv": "^6.0.0",
     "codelyzer": "^4.0.1",
     "jasmine-core": "~2.6.2 <3",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~2.0.0",
     "karma-chrome-launcher": "~2.2.0",
-    "karma-cli": "~1.0.1",
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",

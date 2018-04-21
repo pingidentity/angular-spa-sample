@@ -36,7 +36,6 @@ import { MetadataComponent       } from './metadata/metadata.component';
 import { Html5Requestor          } from './html5_requestor';
 import { environment             } from '../environments/environment';
 import { AuthorizationConfig     } from './authorization_config';
-import './rxjs-operators';
 
 @NgModule({
   declarations: [

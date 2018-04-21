@@ -12,6 +12,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '../authorization.service';
 import { UserInfo } from '../userinfo';
+import { TokenResponse } from '@openid/appauth';
 
 @Component({
   selector: 'app-authentication',
@@ -28,7 +29,7 @@ export class AuthenticationComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.authorizationService.userInfos().subscribe((userInfo) => this.userInfo = userInfo);
-    this.authorizationService.tokenResponse().subscribe((tokenResponse) => this.authorized = tokenResponse != null);
+    this.authorizationService.userInfos().subscribe((userInfo: UserInfo) => this.userInfo = userInfo);
+    this.authorizationService.tokenResponse().subscribe((tokenResponse: TokenResponse) => this.authorized = tokenResponse != null);
   }
 }

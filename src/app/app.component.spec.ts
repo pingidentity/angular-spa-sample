@@ -22,12 +22,19 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { IntroComponent } from './intro/intro.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { AuthorizationService } from './authorization.service';
-import './rxjs-operators';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ MatToolbarModule, MatSidenavModule, MatCardModule, MatIconModule, MatProgressSpinnerModule, AppRoutingModule, NoopAnimationsModule],
+      imports: [
+        AppRoutingModule,
+        MatCardModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        NoopAnimationsModule
+      ],
       declarations: [ AppComponent, MetadataComponent, CallbackComponent, DashboardComponent, IntroComponent, AuthenticationComponent],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},
