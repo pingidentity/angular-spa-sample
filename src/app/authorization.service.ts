@@ -131,16 +131,18 @@ export class AuthorizationService {
           return;
         }
 
-        // fetch user info
-        const accessToken = token.accessToken;
-        this.requestor.xhr<UserInfo>({
-            url: configuration.userInfoEndpoint,
-            method: 'GET',
-            dataType: 'json',
-            headers: {'Authorization': `Bearer ${accessToken}`}
-          }).then((userinfo) => {
-            this._userInfos.next(userinfo);
-          });
+        // fetch user info, if none
+        if (this._userInfos.value == null) {
+          const accessToken = token.accessToken;
+          this.requestor.xhr<UserInfo>({
+              url: configuration.userInfoEndpoint,
+              method: 'GET',
+              dataType: 'json',
+              headers: {'Authorization': `Bearer ${accessToken}`}
+            }).then((userinfo) => {
+              this._userInfos.next(userinfo);
+            });
+        }
     });
 
     // start fetching metadata

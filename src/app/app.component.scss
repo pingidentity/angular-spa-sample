@@ -2,17 +2,21 @@
     flex: 1;
 }
 
+.mat-sidenav.mat-drawer-side {
+    background: inherit;
+}
+
 .mat-sidenav {
     display: flex;
     flex-flow: column;
     align-items: stretch;
-    ul {
-        display: block;
-        margin: 0;
-        padding: 0;
-        li a {
-            display: block;
+    .mat-nav-list {
+        a.mat-list-item {
             flex: 1 0;
+            text-align: left;
+        }
+        a.mat-list-item.active {
+            font-weight: bolder;
         }
     }
 }

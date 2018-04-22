@@ -12,7 +12,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { AppModule } from './app.module';
-import { MatToolbarModule, MatSidenavModule, MatIconModule, MatCardModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatToolbarModule, MatSidenavModule, MatIconModule, MatCardModule, MatProgressSpinnerModule, MatListModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { MetadataComponent } from './metadata/metadata.component';
 import { CallbackComponent } from './callback/callback.component';
@@ -30,6 +30,7 @@ describe('AppComponent', () => {
         AppRoutingModule,
         MatCardModule,
         MatIconModule,
+        MatListModule,
         MatProgressSpinnerModule,
         MatSidenavModule,
         MatToolbarModule,

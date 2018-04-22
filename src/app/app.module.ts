@@ -20,7 +20,8 @@ import {
   MatProgressSpinnerModule,
   MatSidenavModule,
   MatSnackBarModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatListModule
 } from '@angular/material';
 import { Requestor               } from '@openid/appauth';
 
@@ -53,6 +54,7 @@ import { IntroDisplayService } from './intro-display.service';
     MatButtonModule,
     MatCardModule,
     MatIconModule,
+    MatListModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatSidenavModule,

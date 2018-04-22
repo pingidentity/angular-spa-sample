@@ -1,20 +1,21 @@
 <div id='app-container'>
-
   <mat-toolbar color="primary">
-      <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+      <button mat-icon-button (click)="toggleSideNav()"><mat-icon>menu</mat-icon></button>
       Angular Example for AppAuth-JS
-    </mat-toolbar>
+  </mat-toolbar>
   <mat-sidenav-container>
-  <mat-sidenav #snav>
-    <ul>
-    <li><a routerLink='/dashboard' mat-button>Dashboard</a></li>
-    <li><a routerLink='/metadata' mat-button>Server Metadata</a></li>
-    </ul>
-  </mat-sidenav>
-  <mat-sidenav-content>
-  <div class='root'>
-    <router-outlet></router-outlet>
-  </div>
-  </mat-sidenav-content>
+    <mat-sidenav mode='side' opened='{{sideNavVisible}}'>
+      <mat-nav-list>
+        <a mat-list-item routerLink='/dashboard' routerLinkActive='active'>
+          <mat-icon>dashboard</mat-icon>Dashboard</a>
+        <a mat-list-item routerLink='/metadata'  routerLinkActive='active'>
+          <mat-icon>settings</mat-icon>Server Metadata</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class='root'>
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
   </mat-sidenav-container>
   </div>
