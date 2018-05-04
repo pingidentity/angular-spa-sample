@@ -25,9 +25,7 @@ import {
   AuthorizationServiceConfigurationJson
 } from '@openid/appauth';
 
-import { Observable } from 'rxjs/Observable';
-import { combineLatest } from 'rxjs/observable/combineLatest';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { distinctUntilChanged, filter, take } from 'rxjs/operators';
 import { TokenResponseJson   } from '@openid/appauth';
 import { UserInfo            } from './userinfo';
