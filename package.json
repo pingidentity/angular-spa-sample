@@ -5,7 +5,7 @@
   "license": "MIT",
   "engines": {
     "node": "^9.10.0",
-    "yarn": "~1.5.1"
+    "yarn": "~1.6.0"
   },
   "scripts": {
     "ng": "ng",
@@ -38,9 +38,9 @@
   },
   "devDependencies": {
     "@angular-devkit/core": "^0.3.2",
+    "@angular/cli": "1.7.4",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.0.0",
-    "@angular/cli": "1.7.4",
     "@types/jasmine": "~2.8.6",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~9.6.0",

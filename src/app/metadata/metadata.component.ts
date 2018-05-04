@@ -23,7 +23,7 @@ export class MetadataComponent implements OnInit {
 
   public authorizationServiceConfiguration: AuthorizationServiceConfiguration | null;
 
-  constructor(private authorizationService: AuthorizationService) {
+  constructor(public authorizationService: AuthorizationService) {
   }
 
   ngOnInit() {
