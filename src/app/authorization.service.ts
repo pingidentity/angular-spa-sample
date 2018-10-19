@@ -35,7 +35,6 @@ const LS_ISSUER_URI     = 'authorization.service.issuer_uri';
 const LS_USER_INFO      = 'authorization.service.user_info';
 const LS_OPENID_CONFIG  = 'authorization.service.parsed_openid_configuration';
 const LS_TOKEN_RESPONSE = 'authorization.service.token_response';
-
 @Injectable()
 export class AuthorizationService {
 
@@ -50,7 +49,7 @@ export class AuthorizationService {
     return this.environment.issuer_uri;
   }
 
-  get expectedMetadataUri() : string {
+  get expectedMetadataUri(): string {
     return `${this.issuerUri}/.well-known/openid-configuration`;
   }
 
@@ -63,6 +62,7 @@ export class AuthorizationService {
     let authorizationServiceConfiguration: AuthorizationServiceConfiguration | null = null;
     let tokenResponse: TokenResponse | null = null;
     let userInfo: UserInfo | null = null;
+    let codeVerifier: string = null;
 
     // verify that we are still working with the same IDP, since a reload may
     // have been due to an underlying configuration change
@@ -70,10 +70,10 @@ export class AuthorizationService {
       const serviceConfigJSON = JSON.parse(
         window.localStorage.getItem(LS_OPENID_CONFIG));
       authorizationServiceConfiguration = serviceConfigJSON &&
-        AuthorizationServiceConfiguration.fromJson(serviceConfigJSON);
+        new AuthorizationServiceConfiguration(serviceConfigJSON);
 
       const tokenResponseJSON = JSON.parse(window.localStorage.getItem(LS_TOKEN_RESPONSE));
-      tokenResponse = tokenResponseJSON && TokenResponse.fromJson(tokenResponseJSON);
+      tokenResponse = tokenResponseJSON && new TokenResponse(tokenResponseJSON);
 
       userInfo = JSON.parse(window.localStorage.getItem(LS_USER_INFO));
     } else {
@@ -100,7 +100,6 @@ export class AuthorizationService {
     this._userInfos.subscribe((info: UserInfo) => {
       window.localStorage.setItem(LS_USER_INFO, info && JSON.stringify(info));
     });
-
     // monitor changes in metadata/tokens to possibly clear dependent values,
     // and to fetch userInfo.
     combineLatest(this._serviceConfigs, this._tokenResponses)
@@ -169,12 +168,14 @@ export class AuthorizationService {
       const scope = this.environment.scope || 'openid';
 
       // create a request
-      const request = new AuthorizationRequest(
-        this.environment.client_id, this.environment.redirect_uri, scope, AuthorizationRequest.RESPONSE_TYPE_CODE,
-        undefined /* state */, this.environment.extras);
-
-        console.log('Making authorization request ', configuration, request);
-        this.authorizationHandler.performAuthorizationRequest(configuration, request);
+      const request = new AuthorizationRequest({
+        client_id: this.environment.client_id,
+        redirect_uri: this.environment.redirect_uri,
+        scope: scope,
+        response_type: AuthorizationRequest.RESPONSE_TYPE_CODE,
+        extras: this.environment.extras
+      });
+      this.authorizationHandler.performAuthorizationRequest(configuration, request);
     });
   }
 
@@ -201,11 +202,20 @@ export class AuthorizationService {
             const tokenHandler = new BaseTokenRequestHandler(this.requestor);
 
             // use the code to make the token request.
-            const extras: StringMap = this.environment.client_secret ? { client_secret: this.environment.client_secret } : undefined;
-            const tokenRequest = new TokenRequest(
-              this.environment.client_id, this.environment.redirect_uri, GRANT_TYPE_AUTHORIZATION_CODE, response.code, null, extras);
+            const extras: StringMap = {};
+            if (this.environment.client_secret) {
+              extras['client_secret'] = this.environment.client_secret;
+            }
+            extras['code_verifier'] = request.internal['code_verifier'];
+            const tokenRequest = new TokenRequest({
+              client_id: this.environment.client_id,
+              redirect_uri: this.environment.redirect_uri,
+              grant_type: GRANT_TYPE_AUTHORIZATION_CODE,
+              code: response.code,
+              extras: extras
+            });
 
-            console.log('making token request:' + JSON.stringify(tokenRequest.toStringMap));
+            console.log('making token request:' + JSON.stringify(tokenRequest.toStringMap()));
             tokenHandler.performTokenRequest(configuration, tokenRequest)
               .then((tokenResponse) => {
                 console.log('received token response ', tokenResponse);
