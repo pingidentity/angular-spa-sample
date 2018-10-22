@@ -29,7 +29,7 @@ export class CallbackComponent implements OnInit {
       if (!window.location.hash || window.location.hash.length === 0) {
         const queryString = window.location.search.substring(1); // substring strips '?'
         const path = [window.location.pathname, queryString].join('#');
-        window.location.assign(new URL(path, window.location.href).toString());
+        window.location.assign( window.location.href + path);
       } else if (new URLSearchParams(window.location.hash).has('code')) {
         this.authorizationService.completeAuthorizationRequest().then((tokenResponse) => {
           console.log('recieved token response: ' + tokenResponse);
