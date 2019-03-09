@@ -17,8 +17,7 @@ import { AuthorizationService } from '../authorization.service';
 import { AuthenticationComponent } from '../authentication/authentication.component';
 import { IntroComponent } from '../intro/intro.component';
 import { environment } from '../../environments/environment';
-import { Html5Requestor } from '../html5_requestor';
-import { Requestor } from '@openid/appauth';
+import { Requestor, FetchRequestor } from '@openid/appauth';
 import { IntroDisplayService } from '../intro-display.service';
 
 describe('DashboardComponent', () => {
@@ -32,7 +31,7 @@ describe('DashboardComponent', () => {
       providers: [
         AuthorizationService,
         IntroDisplayService,
-        { provide: Requestor, useValue: new Html5Requestor()},
+        { provide: Requestor, useValue: new FetchRequestor()},
         { provide: 'AuthorizationConfig', useValue: environment}
      ],
     })

@@ -319,16 +319,16 @@
     tree-kill "1.2.1"
     webpack-sources "1.3.0"
 
-"@openid/appauth@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@openid/appauth/-/appauth-1.1.1.tgz#7916b9d811b9a1825a7a058d0ab0a3f7a1bdf5a6"
-  integrity sha512-FkOuqnV8zXRkJPeMu+u+3FQcafh3sLYKg1Pdd0yUBeVCqDQgh5qFAWexn3Yy+PAbj2ry30mST1bCoNQuPVLsdA==
+"@openid/appauth@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@openid/appauth/-/appauth-1.2.1.tgz#559288160b1a938b0e4f4569e3b7311ff0fc8161"
+  integrity sha512-Xjwt82lrfi+4iJ9S0SZ2fa68gSQRC0EfK6bPWUosen8AROnYkXg+5cs+ID6wEFwEFPJxgNbKR5sObeRmlRsFhA==
   dependencies:
     "@types/base64-js" "^1.2.5"
-    "@types/jquery" "^3.3.6"
+    "@types/jquery" "^3.3.29"
     base64-js "^1.3.0"
-    follow-redirects "^1.5.8"
-    form-data "^2.3.2"
+    follow-redirects "^1.6.1"
+    form-data "^2.3.3"
     opener "^1.5.1"
 
 "@schematics/angular@7.3.5":
@@ -371,7 +371,7 @@
   dependencies:
     "@types/jasmine" "*"
 
-"@types/jquery@^3.3.6":
+"@types/jquery@^3.3.29":
   version "3.3.29"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.3.29.tgz#680a2219ce3c9250483722fccf5570d1e2d08abd"
   integrity sha512-FhJvBninYD36v3k6c+bVk1DSZwh7B5Dpb/Pyk3HKVsiohn0nhbefZZ+3JXbWQhFyt0MxSl2jRDdGQPHeOHFXrQ==
@@ -2648,7 +2648,7 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
-follow-redirects@^1.0.0, follow-redirects@^1.5.8:
+follow-redirects@^1.0.0, follow-redirects@^1.6.1:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.7.0.tgz#489ebc198dc0e7f64167bd23b03c4c19b5784c76"
   integrity sha512-m/pZQy4Gj287eNy94nivy5wchN3Kp+Q5WgUPNy5lJSZ3sgkVKSYV/ZChMAQVIgx1SqfZ2zBZtPA2YlXIWxxJOQ==
@@ -2677,7 +2677,7 @@ forever-agent@~0.6.1:
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
   integrity sha1-+8cfDEGt6zf5bFd60e1C2P2sypE=
 
-form-data@^2.3.2, form-data@~2.3.2:
+form-data@^2.3.3, form-data@~2.3.2:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.3.3.tgz#dcce52c05f644f298c6a7ab936bd724ceffbf3a6"
   integrity sha512-1lLKB2Mu3aGP1Q/2eCOx0fNbRMe7XdwktwOruhfqqd0rIJWwN4Dh+E3hrPSlDCXnSR7UtZ1N38rVXm+6+MEhJQ==

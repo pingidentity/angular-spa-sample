@@ -9,6 +9,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import * as $ from 'jquery';
+
 import { BrowserModule           } from '@angular/platform-browser';
 import { NgModule                } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,7 +25,7 @@ import {
   MatToolbarModule,
   MatListModule
 } from '@angular/material';
-import { Requestor               } from '@openid/appauth';
+import { Requestor, FetchRequestor } from '@openid/appauth';
 
 import { AppComponent            } from './app.component';
 import { AppRoutingModule        } from './app-routing.module';
@@ -34,7 +36,6 @@ import { DashboardComponent      } from './dashboard/dashboard.component';
 import { IntroComponent          } from './intro/intro.component';
 import { MetadataComponent       } from './metadata/metadata.component';
 
-import { Html5Requestor          } from './html5_requestor';
 import { environment             } from '../environments/environment';
 import { AuthorizationConfig     } from './authorization_config';
 import { IntroDisplayService } from './intro-display.service';
@@ -65,7 +66,7 @@ import { IntroDisplayService } from './intro-display.service';
   providers: [
     AuthorizationService,
     IntroDisplayService,
-    { provide: Requestor, useValue: new Html5Requestor()},
+    { provide: Requestor, useValue: new FetchRequestor()},
     { provide: 'AuthorizationConfig', useValue: environment}
   ],
   bootstrap: [ AppComponent ]

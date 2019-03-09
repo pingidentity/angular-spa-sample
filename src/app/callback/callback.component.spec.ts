@@ -20,9 +20,8 @@ import { MatCardModule, MatIconModule, MatProgressSpinnerModule } from '@angular
 import { IntroComponent } from '../intro/intro.component';
 import { AuthenticationComponent } from '../authentication/authentication.component';
 import { APP_BASE_HREF } from '@angular/common';
-import { Html5Requestor } from '../html5_requestor';
 import { environment } from '../../environments/environment';
-import { Requestor } from '@openid/appauth';
+import { Requestor, FetchRequestor } from '@openid/appauth';
 
 describe('CallbackComponent', () => {
   let component: CallbackComponent;
@@ -35,7 +34,7 @@ describe('CallbackComponent', () => {
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},
         AuthorizationService,
-        { provide: Requestor, useValue: new Html5Requestor()},
+        { provide: Requestor, useValue: new FetchRequestor()},
         { provide: 'AuthorizationConfig', useValue: environment}
       ],
     })
