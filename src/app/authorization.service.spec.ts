@@ -12,8 +12,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { AuthorizationService } from './authorization.service';
-import { Requestor } from '@openid/appauth';
-import { Html5Requestor } from './html5_requestor';
+import { Requestor, FetchRequestor } from '@openid/appauth';
 import { environment } from '../environments/environment';
 
 describe('AuthorizationService', () => {
@@ -21,7 +20,7 @@ describe('AuthorizationService', () => {
     TestBed.configureTestingModule({
       providers: [
         AuthorizationService,
-        { provide: Requestor, useValue: new Html5Requestor()},
+        { provide: Requestor, useValue: new FetchRequestor()},
         { provide: 'AuthorizationConfig', useValue: environment}
      ]
     });
