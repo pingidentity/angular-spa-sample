@@ -33,6 +33,7 @@
     "@angular/router": "^7.2.14",
     "@openid/appauth": "1.2.3",
     "core-js": "2",
+    "fstream": "^1.0.12",
     "node": "12",
     "node-sass": "^4.9.4",
     "rxjs": "^6.5.1",
