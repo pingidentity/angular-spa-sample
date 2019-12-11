@@ -12,7 +12,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IntroComponent } from './intro.component';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 import { IntroDisplayService } from '../intro-display.service';
 
 describe('IntroComponent', () => {

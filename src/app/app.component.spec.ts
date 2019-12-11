@@ -12,7 +12,12 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { AppModule } from './app.module';
-import { MatToolbarModule, MatSidenavModule, MatIconModule, MatCardModule, MatProgressSpinnerModule, MatListModule } from '@angular/material';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatListModule } from '@angular/material/list';
 import { AppRoutingModule } from './app-routing.module';
 import { MetadataComponent } from './metadata/metadata.component';
 import { CallbackComponent } from './callback/callback.component';

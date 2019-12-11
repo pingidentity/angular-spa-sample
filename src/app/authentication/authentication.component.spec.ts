@@ -12,7 +12,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthenticationComponent } from './authentication.component';
-import { MatCardModule, MatIconModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { AuthorizationService } from '../authorization.service';
 import { Requestor, FetchRequestor } from '@openid/appauth';
 import { environment } from '../../environments/environment';

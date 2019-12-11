@@ -12,7 +12,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
-import { MatCardModule, MatIconModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { AuthorizationService } from '../authorization.service';
 import { AuthenticationComponent } from '../authentication/authentication.component';
 import { IntroComponent } from '../intro/intro.component';

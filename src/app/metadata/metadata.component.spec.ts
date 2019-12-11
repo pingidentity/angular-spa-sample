@@ -12,7 +12,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MetadataComponent } from './metadata.component';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 import { AuthorizationService } from '../authorization.service';
 import { environment } from '../../environments/environment';
 import { Requestor, FetchRequestor } from '@openid/appauth';

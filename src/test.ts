@@ -24,14 +24,14 @@ import {
 } from '@angular/platform-browser-dynamic/testing';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  MatButtonModule,
-  MatCardModule,
-  MatIconModule,
-  MatSidenavModule,
-  MatSnackBarModule,
-  MatToolbarModule
-} from '@angular/material';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
