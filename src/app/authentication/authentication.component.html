@@ -14,7 +14,7 @@
 <mat-card *ngIf='authorized'>
   <mat-card-header>
     <mat-card-title>User information</mat-card-title>
-    <img mat-card-avatar src='{{userInfo?.picture}}' />
+    <img mat-card-avatar src='{{userInfo?.picture}}' referrerpolicy="no-referrer" />
   </mat-card-header>
   <mat-card-content *ngIf='!userInfo'>
     <h4>Authorized</h4>
