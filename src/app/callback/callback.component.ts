@@ -29,12 +29,13 @@ export class CallbackComponent implements AfterViewInit {
       const queryString = window.location.search.substring(1); // substring strips '?'
       const path = [window.location.pathname, queryString].join('#');
       window.location.assign(new URL(path, window.location.href).toString());
-    } else if (new URLSearchParams(window.location.hash).has('code')) {
+    } else if (new URLSearchParams(window.location.hash.substring(1)).has('code')) {
       this.authorizationService.completeAuthorizationRequest().then((tokenResponse) => {
         console.log('recieved token response: ' + tokenResponse);
         this.router.navigate(['dashboard']);
       });
     } else {
+      console.log('did not recognize callback in URL fragment or query')
       this.router.navigate(['dashboard']);
     }
   }
