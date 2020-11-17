@@ -41,6 +41,6 @@ The demo application needs to be configured as an OAuth Client in PingFederate i
 
 You can also change optional settings to affect behavior
 
-1. The behavior of how the user is prompted for consent to share information with the demo application can be changed using teh `Bypass Authorization Approval` and persistent grant options.
+1. The behavior of how the user is prompted for consent to share information with the demo application can be changed using the `Bypass Authorization Approval` and persistent grant options.
 2. Change the `ID Token Signing Algorithm` to an elliptic curve option, such as `ECDSA using P256 Curve and SHA-256`. The Javascript code supports this algorithm, and it reduces CPU utilization and the size of the resulting ID token.
 3. Enable `Pairwise identifiers`. This will give a unique user identifier to the relying party, rather than returning the subject identifier of the user. This prevents correlation of a user across multiple relying parties.
