@@ -29,29 +29,36 @@ import { AuthenticationComponent } from './authentication/authentication.compone
 import { AuthorizationService } from './authorization.service';
 
 describe('AppComponent', () => {
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        AppRoutingModule,
-        MatCardModule,
-        MatIconModule,
-        MatListModule,
-        MatProgressSpinnerModule,
-        MatSidenavModule,
-        MatToolbarModule,
-        NoopAnimationsModule
-      ],
-      declarations: [ AppComponent, MetadataComponent, CallbackComponent, DashboardComponent, IntroComponent, AuthenticationComponent],
-      providers: [
-        {provide: APP_BASE_HREF, useValue: '/'},
-        AuthorizationService
-      ]
-    }).compileComponents();
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                AppRoutingModule,
+                MatCardModule,
+                MatIconModule,
+                MatListModule,
+                MatProgressSpinnerModule,
+                MatSidenavModule,
+                MatToolbarModule,
+                NoopAnimationsModule
+            ],
+            declarations: [
+                AppComponent,
+                MetadataComponent,
+                CallbackComponent,
+                DashboardComponent,
+                IntroComponent,
+                AuthenticationComponent
+            ],
+            providers: [
+                {provide: APP_BASE_HREF, useValue: '/'},
+                AuthorizationService
+            ]
+        }).compileComponents();
 
-  }));
-  it('should create the app', waitForAsync(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
+    }));
+    it('should create the app', waitForAsync(() => {
+        const fixture = TestBed.createComponent(AppComponent);
+        const app = fixture.debugElement.componentInstance;
+        expect(app).toBeTruthy();
+    }));
 });

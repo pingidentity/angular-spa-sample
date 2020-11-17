@@ -22,30 +22,30 @@ import { Requestor, FetchRequestor } from '@openid/appauth';
 import { IntroDisplayService } from '../intro-display.service';
 
 describe('DashboardComponent', () => {
-  let component: DashboardComponent;
-  let fixture: ComponentFixture<DashboardComponent>;
+    let component: DashboardComponent;
+    let fixture: ComponentFixture<DashboardComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ DashboardComponent, AuthenticationComponent, IntroComponent ],
-      imports: [MatCardModule, MatIconModule],
-      providers: [
-        AuthorizationService,
-        IntroDisplayService,
-        { provide: Requestor, useValue: new FetchRequestor()},
-        { provide: 'AuthorizationConfig', useValue: environment}
-     ],
-    })
-    .compileComponents();
-  }));
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [ DashboardComponent, AuthenticationComponent, IntroComponent ],
+            imports: [MatCardModule, MatIconModule],
+            providers: [
+                AuthorizationService,
+                IntroDisplayService,
+                { provide: Requestor, useValue: new FetchRequestor()},
+                { provide: 'AuthorizationConfig', useValue: environment}
+            ],
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(DashboardComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

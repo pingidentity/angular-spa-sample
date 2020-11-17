@@ -4,19 +4,19 @@ import { Injectable } from '@angular/core';
 export class IntroDisplayService {
 
 
-  public get dismissed(): boolean {
-    return localStorage.getItem('intro.component.dismissed') === 'true';
-  }
-
-  public set dismissed(value: boolean) {
-    if (value) {
-      localStorage.setItem('intro.component.dismissed', 'true');
-    } else {
-      localStorage.removeItem('intro.component.dismissed');
+    public get dismissed(): boolean {
+        return localStorage.getItem('intro.component.dismissed') === 'true';
     }
-  }
 
-  constructor() { }
+    public set dismissed(value: boolean) {
+        if (value) {
+            localStorage.setItem('intro.component.dismissed', 'true');
+        } else {
+            localStorage.removeItem('intro.component.dismissed');
+        }
+    }
+
+    constructor() { }
 
 
 }

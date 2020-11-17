@@ -18,29 +18,29 @@ import { environment } from '../../environments/environment';
 import { Requestor, FetchRequestor } from '@openid/appauth';
 
 describe('MetadataComponent', () => {
-  let component: MetadataComponent;
-  let fixture: ComponentFixture<MetadataComponent>;
+    let component: MetadataComponent;
+    let fixture: ComponentFixture<MetadataComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [ MatCardModule ],
-      declarations: [ MetadataComponent ],
-      providers: [
-        AuthorizationService,
-        { provide: Requestor, useValue: new FetchRequestor()},
-        { provide: 'AuthorizationConfig', useValue: environment}
-     ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            imports: [ MatCardModule ],
+            declarations: [ MetadataComponent ],
+            providers: [
+                AuthorizationService,
+                { provide: Requestor, useValue: new FetchRequestor()},
+                { provide: 'AuthorizationConfig', useValue: environment}
+            ]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MetadataComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(MetadataComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

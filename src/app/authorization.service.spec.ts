@@ -16,17 +16,17 @@ import { Requestor, FetchRequestor } from '@openid/appauth';
 import { environment } from '../environments/environment';
 
 describe('AuthorizationService', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        AuthorizationService,
-        { provide: Requestor, useValue: new FetchRequestor()},
-        { provide: 'AuthorizationConfig', useValue: environment}
-     ]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [
+                AuthorizationService,
+                { provide: Requestor, useValue: new FetchRequestor()},
+                { provide: 'AuthorizationConfig', useValue: environment}
+            ]
+        });
     });
-  });
 
-  it('should be created', inject([AuthorizationService], (service: AuthorizationService) => {
-    expect(service).toBeTruthy();
-  }));
+    it('should be created', inject([AuthorizationService], (service: AuthorizationService) => {
+        expect(service).toBeTruthy();
+    }));
 });

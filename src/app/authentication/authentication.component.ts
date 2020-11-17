@@ -15,24 +15,24 @@ import { UserInfo } from '../userinfo';
 import { TokenResponse } from '@openid/appauth';
 
 @Component({
-  selector: 'app-authentication',
-  templateUrl: './authentication.component.html',
-  styleUrls: ['./authentication.component.scss']
+    selector: 'app-authentication',
+    templateUrl: './authentication.component.html',
+    styleUrls: ['./authentication.component.scss']
 })
 export class AuthenticationComponent implements OnInit {
 
-  public userInfo: UserInfo | null;
-  public authorized: boolean;
+    public userInfo: UserInfo | null;
+    public authorized: boolean;
 
-  constructor(private authorizationService: AuthorizationService) {
-  }
+    constructor(private authorizationService: AuthorizationService) {
+    }
 
-  ngOnInit() {
-    this.authorizationService.userInfos().subscribe((userInfo: UserInfo) => {
-      this.userInfo = userInfo;
-    });
-    this.authorizationService.tokenResponse().subscribe((tokenResponse: TokenResponse) => {
-      this.authorized = tokenResponse != null;
-    });
-  }
+    ngOnInit() {
+        this.authorizationService.userInfos().subscribe((userInfo: UserInfo) => {
+            this.userInfo = userInfo;
+        });
+        this.authorizationService.tokenResponse().subscribe((tokenResponse: TokenResponse) => {
+            this.authorized = tokenResponse != null;
+        });
+    }
 }

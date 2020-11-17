@@ -15,20 +15,20 @@ import { AuthorizationServiceConfiguration } from '@openid/appauth';
 import { AuthorizationConfig } from '../authorization_config';
 
 @Component({
-  selector: 'app-metadata',
-  templateUrl: './metadata.component.html',
-  styleUrls: ['./metadata.component.scss']
+    selector: 'app-metadata',
+    templateUrl: './metadata.component.html',
+    styleUrls: ['./metadata.component.scss']
 })
 export class MetadataComponent implements OnInit {
 
-  public authorizationServiceConfiguration: AuthorizationServiceConfiguration | null;
+    public authorizationServiceConfiguration: AuthorizationServiceConfiguration | null;
 
-  constructor(public authorizationService: AuthorizationService) {
-  }
+    constructor(public authorizationService: AuthorizationService) {
+    }
 
-  ngOnInit() {
-    this.authorizationService.serviceConfiguration().subscribe( (config: AuthorizationServiceConfiguration) => {
-      this.authorizationServiceConfiguration = config;
-    });
-  }
+    ngOnInit() {
+        this.authorizationService.serviceConfiguration().subscribe( (config: AuthorizationServiceConfiguration) => {
+            this.authorizationServiceConfiguration = config;
+        });
+    }
 }

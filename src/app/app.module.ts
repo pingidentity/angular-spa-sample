@@ -41,34 +41,34 @@ import { AuthorizationConfig     } from './authorization_config';
 import { IntroDisplayService } from './intro-display.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AuthenticationComponent,
-    CallbackComponent,
-    DashboardComponent,
-    IntroComponent,
-    MetadataComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatListModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatSidenavModule,
-    MatSnackBarModule,
-    MatToolbarModule,
-    AppRoutingModule
-  ],
-  providers: [
-    AuthorizationService,
-    IntroDisplayService,
-    { provide: Requestor, useValue: new FetchRequestor()},
-    { provide: 'AuthorizationConfig', useValue: environment}
-  ],
-  bootstrap: [ AppComponent ]
+    declarations: [
+        AppComponent,
+        AuthenticationComponent,
+        CallbackComponent,
+        DashboardComponent,
+        IntroComponent,
+        MetadataComponent
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatCardModule,
+        MatIconModule,
+        MatListModule,
+        MatProgressBarModule,
+        MatProgressSpinnerModule,
+        MatSidenavModule,
+        MatSnackBarModule,
+        MatToolbarModule,
+        AppRoutingModule
+    ],
+    providers: [
+        AuthorizationService,
+        IntroDisplayService,
+        { provide: Requestor, useValue: new FetchRequestor()},
+        { provide: 'AuthorizationConfig', useValue: environment}
+    ],
+    bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -16,27 +16,27 @@ import { AppRoutingModule } from '../app-routing.module';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-callback',
-  templateUrl: './callback.component.html',
-  styleUrls: ['./callback.component.scss']
+    selector: 'app-callback',
+    templateUrl: './callback.component.html',
+    styleUrls: ['./callback.component.scss']
 })
 export class CallbackComponent implements AfterViewInit {
 
-  constructor(public authorizationService: AuthorizationService, public router: Router) { }
+    constructor(public authorizationService: AuthorizationService, public router: Router) { }
 
-  ngAfterViewInit() {
-    if (!window.location.hash || window.location.hash.length === 0) {
-      const queryString = window.location.search.substring(1); // substring strips '?'
-      const path = [window.location.pathname, queryString].join('#');
-      window.location.assign(new URL(path, window.location.href).toString());
-    } else if (new URLSearchParams(window.location.hash.substring(1)).has('code')) {
-      this.authorizationService.completeAuthorizationRequest().then((tokenResponse) => {
-        console.log('recieved token response: ' + tokenResponse);
-        this.router.navigate(['dashboard']);
-      });
-    } else {
-      console.log('did not recognize callback in URL fragment or query')
-      this.router.navigate(['dashboard']);
+    ngAfterViewInit() {
+        if (!window.location.hash || window.location.hash.length === 0) {
+            const queryString = window.location.search.substring(1); // substring strips '?'
+            const path = [window.location.pathname, queryString].join('#');
+            window.location.assign(new URL(path, window.location.href).toString());
+        } else if (new URLSearchParams(window.location.hash.substring(1)).has('code')) {
+            this.authorizationService.completeAuthorizationRequest().then((tokenResponse) => {
+                console.log('recieved token response: ' + tokenResponse);
+                this.router.navigate(['dashboard']);
+            });
+        } else {
+            console.log('did not recognize callback in URL fragment or query');
+            this.router.navigate(['dashboard']);
+        }
     }
-  }
 }

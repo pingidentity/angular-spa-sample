@@ -13,18 +13,18 @@ import { Component, OnInit } from '@angular/core';
 import { IntroDisplayService } from '../intro-display.service';
 
 @Component({
-  selector: 'app-intro',
-  templateUrl: './intro.component.html',
-  styleUrls: ['./intro.component.scss']
+    selector: 'app-intro',
+    templateUrl: './intro.component.html',
+    styleUrls: ['./intro.component.scss']
 })
 export class IntroComponent implements OnInit {
 
-  constructor(public introDisplay: IntroDisplayService) {}
-  
-  dismiss() {
-    this.introDisplay.dismissed = true;
-  }
-  ngOnInit() {
-  }
+    constructor(public introDisplay: IntroDisplayService) {}
+
+    dismiss() {
+        this.introDisplay.dismissed = true;
+    }
+    ngOnInit() {
+    }
 
 }

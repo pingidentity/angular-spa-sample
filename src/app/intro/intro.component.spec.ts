@@ -16,25 +16,25 @@ import { MatCardModule } from '@angular/material/card';
 import { IntroDisplayService } from '../intro-display.service';
 
 describe('IntroComponent', () => {
-  let component: IntroComponent;
-  let fixture: ComponentFixture<IntroComponent>;
+    let component: IntroComponent;
+    let fixture: ComponentFixture<IntroComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [ MatCardModule ],
-      declarations: [ IntroComponent ],
-      providers: [ IntroDisplayService ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            imports: [ MatCardModule ],
+            declarations: [ IntroComponent ],
+            providers: [ IntroDisplayService ]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(IntroComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(IntroComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

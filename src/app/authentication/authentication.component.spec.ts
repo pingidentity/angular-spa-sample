@@ -19,29 +19,29 @@ import { Requestor, FetchRequestor } from '@openid/appauth';
 import { environment } from '../../environments/environment';
 
 describe('AuthenticationComponent', () => {
-  let component: AuthenticationComponent;
-  let fixture: ComponentFixture<AuthenticationComponent>;
+    let component: AuthenticationComponent;
+    let fixture: ComponentFixture<AuthenticationComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ AuthenticationComponent ],
-      imports: [ MatCardModule, MatIconModule ],
-      providers: [
-        AuthorizationService,
-        { provide: Requestor, useValue: new FetchRequestor()},
-        { provide: 'AuthorizationConfig', useValue: environment}
-     ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [ AuthenticationComponent ],
+            imports: [ MatCardModule, MatIconModule ],
+            providers: [
+                AuthorizationService,
+                { provide: Requestor, useValue: new FetchRequestor()},
+                { provide: 'AuthorizationConfig', useValue: environment}
+            ]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AuthenticationComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(AuthenticationComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
