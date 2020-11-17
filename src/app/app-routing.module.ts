@@ -17,11 +17,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 @NgModule({
   imports: [
     RouterModule.forRoot([
-      { path: '',          redirectTo: '/dashboard', pathMatch: 'full' },
-      { path: 'metadata',  component: MetadataComponent },
-      { path: 'callback',  component: CallbackComponent },
-      { path: 'dashboard', component: DashboardComponent }
-    ])
+    { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+    { path: 'metadata', component: MetadataComponent },
+    { path: 'callback', component: CallbackComponent },
+    { path: 'dashboard', component: DashboardComponent }
+], { relativeLinkResolution: 'legacy' })
   ],
   exports: [
     RouterModule
