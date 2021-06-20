@@ -41,9 +41,9 @@ export class AuthorizationService {
     private notifier = new AuthorizationNotifier();
     private authorizationHandler = new RedirectRequestHandler();
 
-    private _tokenResponses: BehaviorSubject<TokenResponse>;
-    private _userInfos:      BehaviorSubject<UserInfo>;
-    private _serviceConfigs: BehaviorSubject<AuthorizationServiceConfiguration>;
+    private _tokenResponses: BehaviorSubject<TokenResponse | null>;
+    private _userInfos:      BehaviorSubject<UserInfo | null>;
+    private _serviceConfigs: BehaviorSubject<AuthorizationServiceConfiguration | null>;
 
     get issuerUri(): string {
         return this.environment.issuer_uri;
@@ -62,20 +62,20 @@ export class AuthorizationService {
         let authorizationServiceConfiguration: AuthorizationServiceConfiguration | null = null;
         let tokenResponse: TokenResponse | null = null;
         let userInfo: UserInfo | null = null;
-        const codeVerifier: string = null;
+        const codeVerifier: string | null = null;
 
         // verify that we are still working with the same IDP, since a reload may
         // have been due to an underlying configuration change
         if (environment.issuer_uri === window.localStorage.getItem(LS_ISSUER_URI)) {
             const serviceConfigJSON = JSON.parse(
-                window.localStorage.getItem(LS_OPENID_CONFIG));
+                window.localStorage.getItem(LS_OPENID_CONFIG)!);
             authorizationServiceConfiguration = serviceConfigJSON &&
         new AuthorizationServiceConfiguration(serviceConfigJSON);
 
-            const tokenResponseJSON = JSON.parse(window.localStorage.getItem(LS_TOKEN_RESPONSE));
+            const tokenResponseJSON = JSON.parse(window.localStorage.getItem(LS_TOKEN_RESPONSE)!);
             tokenResponse = tokenResponseJSON && new TokenResponse(tokenResponseJSON);
 
-            userInfo = JSON.parse(window.localStorage.getItem(LS_USER_INFO));
+            userInfo = JSON.parse(window.localStorage.getItem(LS_USER_INFO)!);
         } else {
             // new issuer (or first run, or cleared session)
             // make sure we store the issuer, and have no other state
@@ -91,20 +91,32 @@ export class AuthorizationService {
         this._userInfos      = new BehaviorSubject(userInfo);
 
         // update local storage on changes
-        this._serviceConfigs.subscribe((config: AuthorizationServiceConfiguration) => {
-            window.localStorage.setItem(LS_OPENID_CONFIG, config && JSON.stringify(config.toJson()));
+        this._serviceConfigs.subscribe((config: AuthorizationServiceConfiguration | null) => {
+            if (config) {
+                window.localStorage.setItem(LS_OPENID_CONFIG, JSON.stringify(config.toJson()));
+            } else {
+                window.localStorage.removeItem(LS_OPENID_CONFIG);
+            }
         });
-        this._tokenResponses.subscribe((token: TokenResponse) => {
-            window.localStorage.setItem(LS_TOKEN_RESPONSE, token && JSON.stringify(token.toJson()));
+        this._tokenResponses.subscribe((token: TokenResponse | null) => {
+            if (token) {
+                window.localStorage.setItem(LS_TOKEN_RESPONSE, JSON.stringify(token?.toJson()));
+            } else {
+                window.localStorage.removeItem(LS_TOKEN_RESPONSE);
+            }
         });
-        this._userInfos.subscribe((info: UserInfo) => {
-            window.localStorage.setItem(LS_USER_INFO, info && JSON.stringify(info));
+        this._userInfos.subscribe((info: UserInfo | null) => {
+            if (info) {
+                window.localStorage.setItem(LS_USER_INFO, JSON.stringify(info));
+            } else {
+                window.localStorage.removeItem(LS_USER_INFO);
+            }
         });
         // monitor changes in metadata/tokens to possibly clear dependent values,
         // and to fetch userInfo.
-        combineLatest(this._serviceConfigs, this._tokenResponses)
+        combineLatest([this._serviceConfigs, this._tokenResponses])
             .subscribe(
-                ([configuration, token]: [AuthorizationServiceConfiguration, TokenResponse]) => {
+                ([configuration, token]: [AuthorizationServiceConfiguration | null, TokenResponse | null]) => {
 
                     // if the service config is cleared, we need to invalidate any TokenResponse/userInfo
                     if (configuration == null) {
@@ -148,19 +160,19 @@ export class AuthorizationService {
         }
     }
 
-    public serviceConfiguration(): Observable<AuthorizationServiceConfiguration> {
+    public serviceConfiguration(): Observable<AuthorizationServiceConfiguration | null> {
         return this._serviceConfigs.asObservable().pipe(distinctUntilChanged());
     }
 
-    public tokenResponse(): Observable<TokenResponse> {
+    public tokenResponse(): Observable<TokenResponse | null> {
         return this._tokenResponses.asObservable().pipe(distinctUntilChanged());
     }
 
-    public userInfos(): Observable<UserInfo> {
+    public userInfos(): Observable<UserInfo | null> {
         return this._userInfos.asObservable().pipe(distinctUntilChanged());
     }
 
-    authorize(): void  {
+    public authorize(): void  {
         this._serviceConfigs
             .pipe(filter((value: any) => value != null))
             .pipe(take(1))
@@ -201,7 +213,9 @@ export class AuthorizationService {
                             if (this.environment.client_secret) {
                                 extras['client_secret'] = this.environment.client_secret;
                             }
-                            extras['code_verifier'] = request.internal['code_verifier'];
+                            if (request.internal) {
+                                extras['code_verifier'] = request.internal['code_verifier'];
+                            }
                             const tokenRequest = new TokenRequest({
                                 client_id: this.environment.client_id,
                                 redirect_uri: this.environment.redirect_uri,

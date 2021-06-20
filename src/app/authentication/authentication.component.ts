@@ -24,14 +24,16 @@ export class AuthenticationComponent implements OnInit {
     public userInfo: UserInfo | null;
     public authorized: boolean;
 
-    constructor(private authorizationService: AuthorizationService) {
+    constructor(public authorizationService: AuthorizationService) {
+        this.userInfo = null;
+        this.authorized = false;
     }
 
     ngOnInit() {
-        this.authorizationService.userInfos().subscribe((userInfo: UserInfo) => {
+        this.authorizationService.userInfos().subscribe((userInfo: UserInfo | null) => {
             this.userInfo = userInfo;
         });
-        this.authorizationService.tokenResponse().subscribe((tokenResponse: TokenResponse) => {
+        this.authorizationService.tokenResponse().subscribe((tokenResponse: TokenResponse | null) => {
             this.authorized = tokenResponse != null;
         });
     }
