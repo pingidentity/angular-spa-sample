@@ -7,9 +7,9 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es2015",
+    "target": "es2019",
     "lib": [
-      "es2017",
+      "es2019",
       "dom"
     ],
     "noImplicitAny": true,
