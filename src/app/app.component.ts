@@ -17,7 +17,7 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    public sideNavVisible = true;
+    public sideNavVisible = false;
 
     public toggleSideNav() {
         this.sideNavVisible = !this.sideNavVisible;
