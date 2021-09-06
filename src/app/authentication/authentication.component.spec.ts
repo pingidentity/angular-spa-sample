@@ -37,7 +37,9 @@ describe('AuthenticationComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AuthenticationComponent);
+        expect(fixture).toBeDefined();
         component = fixture.componentInstance;
+        expect(component).toBeDefined();
         fixture.detectChanges();
     });
 
