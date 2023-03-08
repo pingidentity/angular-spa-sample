@@ -29,6 +29,7 @@
               "src/favicon.ico"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss"
             ],
             "scripts": [],
@@ -108,5 +109,7 @@
       }
     }
   },
-  "defaultProject": "appauth-angular-app"
+  "cli": {
+    "analytics": false
+  }
 }
