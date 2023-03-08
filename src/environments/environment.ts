@@ -14,7 +14,8 @@ import { AuthorizationConfig, GeneralEnvironmentInfo } from '../app/authorizatio
 export const environment: AuthorizationConfig & GeneralEnvironmentInfo  = {
   production: false,
   issuer_uri: 'https://accounts.google.com',
-  client_id: '465844544800-f1k5bhu8jibs9vc1ifh7nmhpmh7nqnod.apps.googleusercontent.com',
+  client_id: '465844544800-5kuaera626plvvp1c4r9vsevjufrnm2f.apps.googleusercontent.com',
+  client_secret: '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',
   redirect_uri: 'http://localhost:4200/callback',
   extras: {
     'prompt': 'consent',
