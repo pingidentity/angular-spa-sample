@@ -107,6 +107,5 @@
         }
       }
     }
-  },
-  "defaultProject": "appauth-angular-app"
+  }
 }
