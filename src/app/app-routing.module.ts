@@ -21,7 +21,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
             { path: 'metadata', component: MetadataComponent },
             { path: 'callback', component: CallbackComponent },
             { path: 'dashboard', component: DashboardComponent }
-        ], { relativeLinkResolution: 'legacy' })
+        ], {})
     ],
     exports: [
         RouterModule
